@@ -5,14 +5,14 @@ import { Pages } from "./Routes";
 import { Template } from "./components/MainComponents";
 import { Header } from "./components/partials/Header";
 import { Footer } from "./components/partials/Footer";
-
+import "./App.css";
 const App = (props: any) => {
   return (
     <BrowserRouter>
       <Template>
         <Header />
         <Pages />
-        <Footer />  
+        <Footer />
         {/* <Footer /> */}
       </Template>
     </BrowserRouter>
