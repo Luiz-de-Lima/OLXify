@@ -13,6 +13,21 @@ export const Header = () => {
             <span className="logo-4">ify</span>
           </Link>
         </div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="">Login</Link>
+            </li>
+            <li>
+              <Link to="">Cadastrar</Link>
+            </li>
+            <li>
+              <Link to="" className="button">
+                Postar um anúncio
+              </Link>
+            </li>
+          </ul>
+        </nav>
       </div>
     </HeaderArea>
   );
