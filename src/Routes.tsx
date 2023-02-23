@@ -3,13 +3,15 @@ import { Route, Routes } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { About } from "./pages/About";
 import { NotFound } from "./pages/NotFound";
+import { SignIn } from "./pages/SignIn";
 
 export const Pages = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/about" element={<About />}></Route>
-      <Route path="*" element={<NotFound />}></Route>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
