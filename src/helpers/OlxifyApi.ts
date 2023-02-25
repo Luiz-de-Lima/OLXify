@@ -28,9 +28,12 @@ const apiFetchPost = async (endpoint: string, body: any) => {
   return json;
 };
 
-const apiFetchGet = async (endpoint: string, body: any) => {
-  console.log(body);
-  if (body.token) {
+const apiFetchGet = async (
+  endpoint: string,
+  body?: { token: Array<{}> } 
+) => {
+  
+  if (!body) {
     let token = Cookies.get("token");
     if (token) {
       body.token = token;
@@ -50,7 +53,7 @@ export const useApi = {
     return json;
   },
   getStates: async () => {
-    const json = await apiFetchGet("/states");
+    const json = await apiFetchGet("/states/");
     console.log(json);
     return json.states;
   },

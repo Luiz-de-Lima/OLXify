@@ -7,27 +7,32 @@ import {
 } from "../../components/MainComponents";
 import { useApi } from "../../helpers/OlxifyApi";
 import { doLogin } from "../../helpers/AuthHandler";
+import { typeState } from "../types/typesState";
 
 export const SignUp = () => {
-  const [input, setInput] = useState({
+  const [register, setRegister] = useState({
     email: "",
     password: "",
     nome: "",
+    confirmPassword: "",
     estado: "",
   });
 
   const [disabled, setDisabled] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [stateList, setStateList] = useState([]);
+  const [stateList, setStateList] = useState<typeState[]>();
+  const [stateLoc, setStateLoc] = useState("");
   const handleChange = (e: any) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
+    setRegister({ ...register, [e.target.name]: e.target.value });
+  };
+  const handleChangeStates = (e: ChangeEvent<HTMLSelectElement>) => {
+    setStateLoc(e.target.value);
+  };
+  const getStates = async () => {
+    const sList = await useApi.getStates();
+    setStateList(sList);
   };
   useEffect(() => {
-    const getStates = async () => {
-      const sList = await useApi.getStates();
-      setStateList(sList);
-    };
     getStates();
   }, []);
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
@@ -41,7 +46,7 @@ export const SignUp = () => {
     //     doLogin(json.token, confirmPassword);
     //     window.location.href = "/";
     //   }
-    //   setDisabled(false);
+    setDisabled(false);
   };
 
   return (
@@ -50,15 +55,14 @@ export const SignUp = () => {
       <PageArea>
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <form action="" onSubmit={handleSubmit}>
-          <label htmlFor="email" className="area">
+          <label htmlFor="nome" className="area">
             <div className="area--title">Nome Completo</div>
             <div className="area--input">
               <input
                 type="text"
-                id="email"
                 name="nome"
                 disabled={disabled}
-                value={input.nome}
+                value={register.nome}
                 onChange={handleChange}
                 required
               />
@@ -69,17 +73,17 @@ export const SignUp = () => {
             <div className="area--input">
               <select
                 disabled={disabled}
-                value={input.estado}
-                onChange={handleChange}
+                value={stateLoc}
+                onChange={handleChangeStates}
                 required
               >
-                {stateList.map((item: string, index: number) => (
-                  <>
-                    <option key={index} value={item}>
-                      {item}
+                <option></option>
+                {stateList &&
+                  stateList.map((item, index) => (
+                    <option key={index} value={item.name}>
+                      {item.name}
                     </option>
-                  </>
-                ))}
+                  ))}
               </select>
             </div>
           </label>
@@ -88,10 +92,9 @@ export const SignUp = () => {
             <div className="area--input">
               <input
                 type="email"
-                id="email"
                 name="email"
                 disabled={disabled}
-                value={input.email}
+                value={register.email}
                 onChange={handleChange}
                 required
               />
@@ -105,7 +108,7 @@ export const SignUp = () => {
                 id="password"
                 name="password"
                 disabled={disabled}
-                value={input.password}
+                value={register.password}
                 onChange={handleChange}
                 required
               />
@@ -116,15 +119,17 @@ export const SignUp = () => {
             <div className="area--input">
               <input
                 type="password"
+                value={register.confirmPassword}
+                name="confirmPassword"
                 disabled={disabled}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                onChange={handleChange}
               />
             </div>
           </label>
           <label htmlFor="" className="area">
             <div className="area--title"></div>
             <div className="area--input">
-              <button disabled={disabled}>Login</button>
+              <button disabled={disabled}>Cadastrar</button>
             </div>
           </label>
         </form>
