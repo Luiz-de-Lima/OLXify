@@ -1,9 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HeaderArea } from "./styled";
-import { isLogged } from "../../../helpers/AuthHandler";
+import { dologout, isLogged } from "../../../helpers/AuthHandler";
 export const Header = () => {
+  const navigate = useNavigate();
   let logged = isLogged();
+
+  const handleLogout = () => {
+    dologout();
+    navigate("/");
+  };
   return (
     <HeaderArea>
       <div className="container">
@@ -23,7 +29,7 @@ export const Header = () => {
                   <Link to="/my-account">Minha conta</Link>
                 </li>
                 <li>
-                  <Link to="/logout">Sair</Link>
+                  <button onClick={handleLogout}>Sair</button>
                 </li>
                 <li>
                   <Link to="/post-an-ad" className="button">

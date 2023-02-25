@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import qs from "qs";
+
 const BASEAPI = "http://alunos.b7web.com.br:501";
 
 const apiFetchPost = async (endpoint: string, body: any) => {
@@ -18,8 +19,10 @@ const apiFetchPost = async (endpoint: string, body: any) => {
     body: JSON.stringify(body),
   });
   const json = await response.json();
+
   if (json.notallowed) {
     window.location.href = "/signin";
+
     return;
   }
   return json;
