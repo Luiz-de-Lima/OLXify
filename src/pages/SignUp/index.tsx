@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, useEffect } from "react";
 import { PageArea } from "./styled";
 import {
   PageContainer,
@@ -7,36 +7,82 @@ import {
 } from "../../components/MainComponents";
 import { useApi } from "../../helpers/OlxifyApi";
 import { doLogin } from "../../helpers/AuthHandler";
-export const SignIn = () => {
-  const [input, setInput] = useState({ email: "", password: "" });
-  const [disabled, setDisabled] = useState(false);
-  const [rememberPassword, setRememberPassword] = useState(false);
-  const [error, setError] = useState("");
 
+export const SignUp = () => {
+  const [input, setInput] = useState({
+    email: "",
+    password: "",
+    nome: "",
+    estado: "",
+  });
+
+  const [disabled, setDisabled] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [stateList, setStateList] = useState([]);
   const handleChange = (e: any) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
-
+  useEffect(() => {
+    const getStates = async () => {
+      const sList = await useApi.getStates();
+      setStateList(sList);
+    };
+    getStates();
+  }, []);
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setDisabled(true);
 
-    const json = await useApi.login(input.email, input.password);
-    if (json.error) {
-      setError(json.error);
-    } else {
-      doLogin(json.token, rememberPassword);
-      window.location.href = "/";
-    }
-    setDisabled(false);
+    //   const json = await useApi.login(input.email, input.password);
+    //   if (json.error) {
+    //     setError(json.error);
+    //   } else {
+    //     doLogin(json.token, confirmPassword);
+    //     window.location.href = "/";
+    //   }
+    //   setDisabled(false);
   };
 
   return (
     <PageContainer>
-      <PageTitle>Login</PageTitle>
+      <PageTitle>Cadastro</PageTitle>
       <PageArea>
         {error && <ErrorMessage>{error}</ErrorMessage>}
         <form action="" onSubmit={handleSubmit}>
+          <label htmlFor="email" className="area">
+            <div className="area--title">Nome Completo</div>
+            <div className="area--input">
+              <input
+                type="text"
+                id="email"
+                name="nome"
+                disabled={disabled}
+                value={input.nome}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </label>
+          <label htmlFor="email" className="area">
+            <div className="area--title">Estado</div>
+            <div className="area--input">
+              <select
+                disabled={disabled}
+                value={input.estado}
+                onChange={handleChange}
+                required
+              >
+                {stateList.map((item: string, index: number) => (
+                  <>
+                    <option key={index} value={item}>
+                      {item}
+                    </option>
+                  </>
+                ))}
+              </select>
+            </div>
+          </label>
           <label htmlFor="email" className="area">
             <div className="area--title">Email</div>
             <div className="area--input">
@@ -66,13 +112,12 @@ export const SignIn = () => {
             </div>
           </label>
           <label htmlFor="" className="area">
-            <div className="area--title">Lembrar Senha</div>
+            <div className="area--title">Confirmar Senha</div>
             <div className="area--input">
               <input
-                type="checkbox"
+                type="password"
                 disabled={disabled}
-                checked={rememberPassword}
-                onChange={() => setRememberPassword(!rememberPassword)}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
           </label>

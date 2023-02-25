@@ -29,6 +29,7 @@ const apiFetchPost = async (endpoint: string, body: any) => {
 };
 
 const apiFetchGet = async (endpoint: string, body: any) => {
+  console.log(body);
   if (body.token) {
     let token = Cookies.get("token");
     if (token) {
@@ -47,5 +48,10 @@ export const useApi = {
   login: async (email: string, password: string) => {
     const json = await apiFetchPost("/user/signin", { email, password });
     return json;
+  },
+  getStates: async () => {
+    const json = await apiFetchGet("/states");
+    console.log(json);
+    return json.states;
   },
 };
