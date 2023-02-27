@@ -28,11 +28,7 @@ const apiFetchPost = async (endpoint: string, body: any) => {
   return json;
 };
 
-const apiFetchGet = async (
-  endpoint: string,
-  body?: { token: Array<{}> } 
-) => {
-  
+const apiFetchGet = async (endpoint: string, body?: { token: Array<{}> }) => {
   if (!body) {
     let token = Cookies.get("token");
     if (token) {
@@ -52,6 +48,15 @@ export const useApi = {
     const json = await apiFetchPost("/user/signin", { email, password });
     return json;
   },
+  registerData: async (data: object, state: string) => {
+    const json = await apiFetchPost("/user/signup", {
+      data,
+      state,
+    });
+    console.log(json.data);
+    return json;
+  },
+
   getStates: async () => {
     const json = await apiFetchGet("/states/");
     console.log(json);

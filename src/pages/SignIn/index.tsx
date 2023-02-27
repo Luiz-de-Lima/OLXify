@@ -7,11 +7,13 @@ import {
 } from "../../components/MainComponents";
 import { useApi } from "../../helpers/OlxifyApi";
 import { doLogin } from "../../helpers/AuthHandler";
+import { useNavigate } from "react-router-dom";
 export const SignIn = () => {
   const [input, setInput] = useState({ email: "", password: "" });
   const [disabled, setDisabled] = useState(false);
   const [rememberPassword, setRememberPassword] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleChange = (e: any) => {
     setInput({ ...input, [e.target.name]: e.target.value });
@@ -20,15 +22,17 @@ export const SignIn = () => {
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setDisabled(true);
-
+    setError("");
     const json = await useApi.login(input.email, input.password);
     if (json.error) {
       setError(json.error);
     } else {
       doLogin(json.token, rememberPassword);
-      window.location.href = "/";
+
+      navigate("/");
     }
     setDisabled(false);
+    setInput({ email: "", password: "" });
   };
 
   return (
@@ -48,6 +52,7 @@ export const SignIn = () => {
                 value={input.email}
                 onChange={handleChange}
                 required
+                autoComplete="off"
               />
             </div>
           </label>

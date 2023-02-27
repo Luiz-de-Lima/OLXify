@@ -27,6 +27,7 @@ export const SignUp = () => {
   };
   const handleChangeStates = (e: ChangeEvent<HTMLSelectElement>) => {
     setStateLoc(e.target.value);
+    console.log(stateLoc);
   };
   const getStates = async () => {
     const sList = await useApi.getStates();
@@ -38,14 +39,20 @@ export const SignUp = () => {
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setDisabled(true);
+    setError("");
+    if (register.password !== register.confirmPassword) {
+      setError("senhas não conferem");
+      setDisabled(false);
+      return;
+    }
 
-    //   const json = await useApi.login(input.email, input.password);
-    //   if (json.error) {
-    //     setError(json.error);
-    //   } else {
-    //     doLogin(json.token, confirmPassword);
-    //     window.location.href = "/";
-    //   }
+    const json = await useApi.registerData(register, stateLoc);
+    if (json.error) {
+      setError(json.error);
+    } else {
+      doLogin(json.token, true);
+      window.location.href = "/";
+    }
     setDisabled(false);
   };
 
