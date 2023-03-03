@@ -6,6 +6,7 @@ const BASEAPI = "http://alunos.b7web.com.br:501";
 const apiFetchPost = async (endpoint: string, body: any) => {
   if (body.token) {
     let token = Cookies.get("token");
+    console.log(token);
     if (token) {
       body.token = token;
     }
@@ -28,7 +29,7 @@ const apiFetchPost = async (endpoint: string, body: any) => {
   return json;
 };
 
-const apiFetchGet = async (endpoint: string, body?: { token: Array<{}> }) => {
+const apiFetchGet = async (endpoint: string, body?: string) => {
   if (!body) {
     let token = Cookies.get("token");
     if (token) {
@@ -48,18 +49,24 @@ export const useApi = {
     const json = await apiFetchPost("/user/signin", { email, password });
     return json;
   },
-  registerData: async (data: object, state: string) => {
+  registerData: async (
+    name: string,
+    email: string,
+    password: string,
+    stateLoc: string
+  ) => {
     const json = await apiFetchPost("/user/signup", {
-      data,
-      state,
+      name,
+      email,
+      password,
+      state: stateLoc,
     });
-    console.log(json.data);
-    return json;
+    console.log(json);
+    return json.data;
   },
 
   getStates: async () => {
     const json = await apiFetchGet("/states/");
-    console.log(json);
     return json.states;
   },
 };

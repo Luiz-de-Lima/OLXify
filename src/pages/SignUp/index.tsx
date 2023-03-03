@@ -8,27 +8,25 @@ import {
 import { useApi } from "../../helpers/OlxifyApi";
 import { doLogin } from "../../helpers/AuthHandler";
 import { typeState } from "../types/typesState";
+import { useNavigate } from "react-router-dom";
 
 export const SignUp = () => {
+  const navigate = useNavigate();
+  const [stateLoc, setStateLoc] = useState("");
   const [register, setRegister] = useState({
     email: "",
     password: "",
     nome: "",
     confirmPassword: "",
-    estado: "",
   });
 
   const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState("");
   const [stateList, setStateList] = useState<typeState[]>();
-  const [stateLoc, setStateLoc] = useState("");
   const handleChange = (e: any) => {
     setRegister({ ...register, [e.target.name]: e.target.value });
   };
-  const handleChangeStates = (e: ChangeEvent<HTMLSelectElement>) => {
-    setStateLoc(e.target.value);
-    console.log(stateLoc);
-  };
+
   const getStates = async () => {
     const sList = await useApi.getStates();
     setStateList(sList);
@@ -46,12 +44,18 @@ export const SignUp = () => {
       return;
     }
 
-    const json = await useApi.registerData(register, stateLoc);
+    const json = await useApi.registerData(
+      register.nome,
+      register.email,
+      register.password,
+      stateLoc
+    );
     if (json.error) {
       setError(json.error);
     } else {
-      doLogin(json.token, true);
+      doLogin(json.token);
       window.location.href = "/";
+      //navigate("/");
     }
     setDisabled(false);
   };
@@ -81,7 +85,7 @@ export const SignUp = () => {
               <select
                 disabled={disabled}
                 value={stateLoc}
-                onChange={handleChangeStates}
+                onChange={(e) => setStateLoc(e.target.value)}
                 required
               >
                 <option></option>
