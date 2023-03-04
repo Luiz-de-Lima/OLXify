@@ -23,7 +23,6 @@ const apiFetchPost = async (endpoint: string, body: any) => {
 
   if (json.notallowed) {
     window.location.href = "/signin";
-
     return;
   }
   return json;
@@ -61,8 +60,8 @@ export const useApi = {
       password,
       state: stateLoc,
     });
-    console.log(json);
-    return json.data;
+
+    return json;
   },
 
   getStates: async () => {
