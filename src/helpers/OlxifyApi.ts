@@ -6,7 +6,7 @@ const BASEAPI = "http://alunos.b7web.com.br:501";
 const apiFetchPost = async (endpoint: string, body: any) => {
   if (body.token) {
     let token = Cookies.get("token");
-    console.log(token);
+
     if (token) {
       body.token = token;
     }
@@ -28,7 +28,7 @@ const apiFetchPost = async (endpoint: string, body: any) => {
   return json;
 };
 
-const apiFetchGet = async (endpoint: string, body?: string) => {
+const apiFetchGet = async (endpoint: string, body?: any) => {
   if (!body) {
     let token = Cookies.get("token");
     if (token) {
@@ -65,7 +65,11 @@ export const useApi = {
   },
 
   getStates: async () => {
-    const json = await apiFetchGet("/states/");
+    const json = await apiFetchGet("/states");
     return json.states;
+  },
+  getCategories: async () => {
+    const json = await apiFetchGet("/categories");
+    return json.categories;
   },
 };
