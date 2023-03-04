@@ -76,6 +76,10 @@ export const PageArea = styled.div`
     .list-ads {
       display: flex;
       flex-wrap: wrap;
+
+      .adItem {
+        width: 25%;
+      }
     }
   }
 

@@ -26,7 +26,7 @@ export const Home = () => {
       limit: 8,
     });
     setAdsList(json.ads);
-    console.table(adsList);
+    console.log(adsList, "ads");
   };
   useEffect(() => {
     getStates();
@@ -81,6 +81,7 @@ export const Home = () => {
             {adsList &&
               adsList.map((item, index) => (
                 <>
+                  <p>{item.title}</p>
                   <AdItem key={index} data={item} />
                 </>
               ))}

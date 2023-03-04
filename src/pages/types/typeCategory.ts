@@ -5,8 +5,10 @@ export type typeCategorie = {
   img: string;
 };
 
-export interface typeAds{
+export type typeAds = {
   title: string;
   price: number;
   image: string;
+  id: string;
+  priceNegotiable: boolean;
 };
