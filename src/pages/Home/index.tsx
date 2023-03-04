@@ -4,11 +4,13 @@ import { PageContainer } from "../../components/MainComponents";
 import { useApi } from "../../helpers/OlxifyApi";
 import { Link, useNavigate } from "react-router-dom";
 import { typeState } from "../types/typesState";
-import { typeCategorie } from "../types/typeCategory";
+import { typeCategorie, typeAds } from "../types/typeCategory";
+import { AdItem } from "../../components/partials/Aditem";
 
 export const Home = () => {
   const [stateList, setStateList] = useState<typeState[]>([]);
   const [categories, setCategories] = useState<typeCategorie[]>([]);
+  const [adsList, setAdsList] = useState<typeAds[]>([]);
 
   const getStates = async () => {
     const sList = await useApi.getStates();
@@ -17,11 +19,19 @@ export const Home = () => {
   const getCategories = async () => {
     const cates = await useApi.getCategories();
     setCategories(cates);
-    console.table(cates);
+  };
+  const getRecentAds = async () => {
+    const json = await useApi.getAds({
+      sort: "desc",
+      limit: 8,
+    });
+    setAdsList(json.ads);
+    console.table(adsList);
   };
   useEffect(() => {
     getStates();
     getCategories();
+    getRecentAds();
   }, []);
 
   return (
@@ -65,7 +75,27 @@ export const Home = () => {
         </PageContainer>
       </SearchArea>
       <PageContainer>
-        <PageArea>...</PageArea>
+        <PageArea>
+          <h2>Anúncios Recentes</h2>
+          <div className="list-ads">
+            {adsList &&
+              adsList.map((item, index) => (
+                <>
+                  <AdItem key={index} data={item} />
+                </>
+              ))}
+          </div>
+          <Link to={"/ads"} className="see-allLink">
+            Ver Todos
+          </Link>
+          <hr />
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam
+            eaque, maiores cumque in, repellat dolores dolorum molestiae totam
+            aliquid error et ab laudantium assumenda nostrum magnam asperiores
+            sed labore aliquam?
+          </p>
+        </PageArea>
       </PageContainer>
     </>
   );

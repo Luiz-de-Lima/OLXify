@@ -4,3 +4,9 @@ export type typeCategorie = {
   slug: string;
   img: string;
 };
+
+export interface typeAds{
+  title: string;
+  price: number;
+  image: string;
+};

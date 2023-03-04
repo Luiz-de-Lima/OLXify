@@ -69,4 +69,21 @@ export const SearchArea = styled.div`
   }
 `;
 
-export const PageArea = styled.div``;
+export const PageArea = styled.div`
+  h2 {
+    font-size: 20px;
+
+    .list-ads {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+  .see-allLink {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 10px;
+  }
+`;

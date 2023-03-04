@@ -72,4 +72,8 @@ export const useApi = {
     const json = await apiFetchGet("/categories");
     return json.categories;
   },
+  getAds: async (options: { sort: string; limit: number }) => {
+    const json = await apiFetchGet("/ad/list", options);
+    return json;
+  },
 };
