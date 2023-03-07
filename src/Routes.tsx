@@ -14,7 +14,7 @@ export const Pages = () => {
       <Route path="/about" element={<About />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/ad/:id" element={<AdPage />} />
+      <Route path="/ads/:id" element={<AdPage />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

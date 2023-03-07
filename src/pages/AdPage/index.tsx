@@ -11,16 +11,19 @@ export const AdPage = () => {
   const api = useApi;
 
   const { id } = useParams();
+  console.log(id);
   const [loading, setLoading] = useState(true);
   const [adInfo, setAdInfo] = useState<AdInfoType>();
-  const getAdinfo = async (id: any) => {
+
+  const getAdInfo = async (id: any) => {
     const json = await api.getAd(id, true);
     console.log(json);
-
+    setAdInfo(json);
+    console.log(adInfo);
     setLoading(false);
   };
   useEffect(() => {
-    getAdinfo(id);
+    getAdInfo(id);
   }, []);
 
   const formateDate = (dateCreated: string) => {
@@ -39,7 +42,7 @@ export const AdPage = () => {
       "Novembro",
       "Dezembro",
     ];
-    let cDay = cDate.getDay();
+    let cDay = cDate.getDate();
     let cMonth = cDate.getMonth();
     let cYear = cDate.getFullYear();
 
@@ -66,7 +69,7 @@ export const AdPage = () => {
                 {loading && <Fake height={100} />}
                 {adInfo?.description}
                 <hr />
-                {adInfo?.views && <small>Visualizações:{adInfo?.views}</small>}
+                {adInfo?.views && <small>Visualizações:{adInfo.views}</small>}
               </div>
             </div>
           </div>

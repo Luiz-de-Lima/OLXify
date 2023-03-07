@@ -76,8 +76,8 @@ export const useApi = {
     const json = await apiFetchGet("/ad/list", options);
     return json;
   },
-  getAd: async (id: string, otherAd: boolean = false) => {
-    const json = await apiFetchGet("/ad/item", { id, otherAd });
+  getAd: async (id: any, other: boolean = false) => {
+    const json = await apiFetchGet("/ad/item", { id, other });
     return json;
   },
 };
