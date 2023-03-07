@@ -12,3 +12,10 @@ export type typeAds = {
   id: string;
   priceNegotiable: boolean;
 };
+
+export type AdInfoType = {
+  title: string;
+  dateCreated: string;
+  description: string;
+  views: string;
+};

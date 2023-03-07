@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PageArea, Fake } from "./styled";
 import { PageContainer } from "../../components/MainComponents";
 import { useApi } from "../../helpers/OlxifyApi";
 
 import { useNavigate, useParams } from "react-router-dom";
+import { AdInfoType } from "../types/typeCategory";
 
 export const AdPage = () => {
   const navigate = useNavigate();
@@ -11,7 +12,39 @@ export const AdPage = () => {
 
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
-  const [adInfo, setAdInfo] = useState([]);
+  const [adInfo, setAdInfo] = useState<AdInfoType>();
+  const getAdinfo = async (id: any) => {
+    const json = await api.getAd(id, true);
+    console.log(json);
+
+    setLoading(false);
+  };
+  useEffect(() => {
+    getAdinfo(id);
+  }, []);
+
+  const formateDate = (dateCreated: string) => {
+    let cDate = new Date(dateCreated);
+    let months = [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro",
+    ];
+    let cDay = cDate.getDay();
+    let cMonth = cDate.getMonth();
+    let cYear = cDate.getFullYear();
+
+    return `${cDay} de ${months[cMonth]} de ${cYear}`;
+  };
 
   return (
     <PageContainer>
@@ -24,9 +57,16 @@ export const AdPage = () => {
             <div className="box_adInfo">
               <div className="box_adInfo--name">
                 {loading && <Fake height={20} />}
+                {adInfo?.title && <h2>{adInfo.title}</h2>}
+                {adInfo?.dateCreated && (
+                  <small>Criado em: {formateDate(adInfo.dateCreated)}</small>
+                )}
               </div>
               <div className="box_adInfo--description">
                 {loading && <Fake height={100} />}
+                {adInfo?.description}
+                <hr />
+                {adInfo?.views && <small>Visualizações:{adInfo?.views}</small>}
               </div>
             </div>
           </div>
