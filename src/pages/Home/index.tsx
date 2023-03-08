@@ -81,7 +81,6 @@ export const Home = () => {
             {adsList &&
               adsList.map((item, index) => (
                 <>
-                  <p>{item.title}</p>
                   <AdItem key={index} data={item} />
                 </>
               ))}

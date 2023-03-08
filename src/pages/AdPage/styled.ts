@@ -9,6 +9,8 @@ export const Fake = styled.div<heightProps>`
 `;
 export const PageArea = styled.div`
   display: flex;
+  margin-top: 20px;
+
 
   .box {
     background-color: #fff;

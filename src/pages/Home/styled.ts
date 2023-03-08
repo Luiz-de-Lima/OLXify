@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const SearchArea = styled.div`
   background-color: #ddd;
-  border-bottom: solid 1px #ccc;
+  border-bottom: #ccc;
   padding: 20px 0;
 
   .search-box {
@@ -15,7 +15,7 @@ export const SearchArea = styled.div`
     form {
       flex: 1;
       display: flex;
-
+      gap: 20px;
       input,
       select {
         height: 40px;
@@ -25,6 +25,7 @@ export const SearchArea = styled.div`
         color: #000;
         margin-right: 1.2rem;
       }
+
       input {
         flex: 1;
         padding: 0 10px;
@@ -57,6 +58,7 @@ export const SearchArea = styled.div`
       text-decoration: none;
       height: 50px;
       margin-bottom: 10px;
+
       &:hover {
         color: #999;
       }
@@ -72,14 +74,13 @@ export const SearchArea = styled.div`
 export const PageArea = styled.div`
   h2 {
     font-size: 20px;
+  }
+  .list-ads {
+    display: flex;
+    flex-wrap: wrap;
 
-    .list-ads {
-      display: flex;
-      flex-wrap: wrap;
-
-      .adItem {
-        width: 25%;
-      }
+    .adItem {
+      width: 25%;
     }
   }
 

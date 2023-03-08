@@ -10,7 +10,7 @@ export const AdItem = ({ data }: AdItemProps) => {
   if (data.priceNegotiable) {
     price = "Preço Negociavel";
   } else {
-    price = `R$ ${data.price}`;
+    price = `R$ ${data.price.toFixed(2)}`;
   }
   return (
     <Item className="adItem">
@@ -21,7 +21,7 @@ export const AdItem = ({ data }: AdItemProps) => {
         <div className="itemName">
           <span>{data.title}</span>
         </div>
-        <div className="itemPrice"></div>
+        <div className="itemPrice">{price}</div>
       </Link>
     </Item>
   );
