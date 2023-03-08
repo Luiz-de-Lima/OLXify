@@ -18,4 +18,5 @@ export type AdInfoType = {
   dateCreated: string;
   description: string;
   views: string;
+  images: string[];
 };

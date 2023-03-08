@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { PageArea, Fake } from "./styled";
-import { PageContainer } from "../../components/MainComponents";
 import { useApi } from "../../helpers/OlxifyApi";
-
 import { useNavigate, useParams } from "react-router-dom";
 import { AdInfoType } from "../types/typeCategory";
+import { Slide } from "react-slideshow-image";
+import { PageArea, Fake } from "./styled";
+import { PageContainer } from "../../components/MainComponents";
 
 export const AdPage = () => {
   const navigate = useNavigate();
@@ -17,10 +17,13 @@ export const AdPage = () => {
 
   const getAdInfo = async (id: any) => {
     const json = await api.getAd(id, true);
-    console.log(json);
-    setAdInfo(json);
-    console.log(adInfo);
-    setLoading(false);
+    if (json) {
+      setAdInfo(json);
+
+      setLoading(false);
+    } else {
+      alert("error");
+    }
   };
   useEffect(() => {
     getAdInfo(id);
@@ -56,6 +59,15 @@ export const AdPage = () => {
           <div className="box">
             <div className="box_adImage">
               {loading && <Fake height={300} />}
+              {adInfo?.images && (
+                <Slide>
+                  {adInfo?.images.map((img, index) => (
+                    <div className="each-slide" key={index}>
+                      <img src={img} alt="teste" />
+                    </div>
+                  ))}
+                </Slide>
+              )}
             </div>
             <div className="box_adInfo">
               <div className="box_adInfo--name">
@@ -68,6 +80,7 @@ export const AdPage = () => {
               <div className="box_adInfo--description">
                 {loading && <Fake height={100} />}
                 {adInfo?.description}
+
                 <hr />
                 {adInfo?.views && <small>Visualizações:{adInfo.views}</small>}
               </div>
