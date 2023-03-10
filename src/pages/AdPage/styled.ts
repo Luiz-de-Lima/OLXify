@@ -11,11 +11,11 @@ export const PageArea = styled.div`
   display: flex;
   margin-top: 20px;
 
-
   .box {
     background-color: #fff;
+
     border-radius: 5px;
-    box-shadow: 0 0 4px #999;
+    box-shadow: 0px 0px 4px #999;
     margin-bottom: 20px;
   }
 
@@ -33,6 +33,11 @@ export const PageArea = styled.div`
       width: 320px;
       height: 320px;
       margin-right: 20px;
+
+      .slides {
+        width: 50%;
+        background-color: purple;
+      }
 
       .each-slide img {
         display: flex;
@@ -64,6 +69,30 @@ export const PageArea = styled.div`
   }
   .right-side {
     width: 250px;
-    background-color: #fff;
+    .price span {
+      color: #1a9af5;
+      display: block;
+      font-size: 27px;
+      font-weight: bold;
+    }
+    .contact-sellerLink {
+      font-weight: 500;
+      background-color: #1a9af5;
+      color: #fff;
+      height: 30px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 4px #999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      margin-bottom: 20px;
+    }
+
+    .createdBy small {
+      display: block;
+      color: #999;
+      margin-top: 10px;
+    }
   }
 `;

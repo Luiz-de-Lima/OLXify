@@ -19,7 +19,7 @@ export const AdPage = () => {
     const json = await api.getAd(id, true);
     if (json) {
       setAdInfo(json);
-
+      console.log(adInfo);
       setLoading(false);
     } else {
       alert("error");
@@ -60,10 +60,11 @@ export const AdPage = () => {
             <div className="box_adImage">
               {loading && <Fake height={300} />}
               {adInfo?.images && (
-                <Slide>
-                  {adInfo?.images.map((img, index) => (
+                // arrumar o slide
+                <Slide cssClass="slides">
+                  {adInfo.images.map((img, index) => (
                     <div className="each-slide" key={index}>
-                      <img src={img} alt="teste" />
+                      <img src={img} alt="" />
                     </div>
                   ))}
                 </Slide>
@@ -90,10 +91,32 @@ export const AdPage = () => {
         <div className="right-side">
           <div className="box box--padding">
             {loading && <Fake height={20} />}
+            {adInfo?.priceNegotiable && "Preço Negociável"}
+            {!adInfo?.priceNegotiable && adInfo?.price && (
+              <div className="price">
+                Preço: <span>R$ {adInfo.price.toFixed(2)}</span>
+              </div>
+            )}
           </div>
-          <div className="box box--padding">
-            {loading && <Fake height={50} />}
-          </div>
+          {loading && <Fake height={50} />}
+
+          {adInfo?.userInfo.email && adInfo.userInfo.email && (
+            <>
+              <a
+                href={`mailto:${adInfo.userInfo.email}`}
+                target="_blank"
+                className="contact-sellerLink"
+              >
+                Falar com o anunciante
+              </a>
+              <div className="createdBy box box--padding">
+                Criado Por:
+                <strong>{adInfo.userInfo.name}</strong>
+                <small>E-mail: {adInfo.userInfo.email}</small>
+                <small>Estado:{adInfo.stateName}</small>
+              </div>
+            </>
+          )}
         </div>
       </PageArea>
     </PageContainer>
