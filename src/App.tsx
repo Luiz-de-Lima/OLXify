@@ -13,7 +13,6 @@ const App = (props: any) => {
         <Header />
         <Pages />
         <Footer />
-        {/* <Footer /> */}
       </Template>
     </BrowserRouter>
   );
