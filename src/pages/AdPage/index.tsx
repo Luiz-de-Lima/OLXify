@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useApi } from "../../helpers/OlxifyApi";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { AdInfoType } from "../types/typeCategory";
 import { Slide } from "react-slideshow-image";
-import { PageArea, Fake } from "./styled";
+import { PageArea, Fake, OtherArea, BreadCrumb } from "./styled";
 import { PageContainer } from "../../components/MainComponents";
+import { AdItem } from "../../components/partials/Aditem";
 
 export const AdPage = () => {
   const navigate = useNavigate();
@@ -54,6 +55,17 @@ export const AdPage = () => {
 
   return (
     <PageContainer>
+      <BreadCrumb>
+        <span>Você está aqui </span>
+        <Link to="/">Home</Link> /{" "}
+        <Link to={`/ads?state=${adInfo?.stateName}`}>{adInfo?.stateName}</Link>/
+        <Link
+          to={`/ads?state=${adInfo?.stateName}&cat=${adInfo?.category.slug}`}
+        >
+          {adInfo?.category.name}
+        </Link>{" "}
+        / {adInfo?.title} /
+      </BreadCrumb>
       <PageArea>
         <div className="left-side">
           <div className="box">
@@ -119,6 +131,18 @@ export const AdPage = () => {
           )}
         </div>
       </PageArea>
+      <OtherArea>
+        {adInfo?.others && (
+          <>
+            <h2>Outras ofertas do anunciante</h2>
+            <div className="list">
+              {adInfo.others.map((item, index) => (
+                <AdItem key={index} data={item} />
+              ))}
+            </div>
+          </>
+        )}
+      </OtherArea>
     </PageContainer>
   );
 };

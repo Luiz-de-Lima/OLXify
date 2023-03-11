@@ -10,6 +10,7 @@ export type typeAds = {
   price: number;
   image: string;
   id: string;
+  priceNegotiable: string;
 };
 
 export type AdInfoType = {
@@ -21,5 +22,7 @@ export type AdInfoType = {
   priceNegotiable: boolean;
   price: number;
   userInfo: { name: string; email: string };
-  stateName:string
+  stateName: string;
+  others: string[];
+  category: typeCategorie;
 };

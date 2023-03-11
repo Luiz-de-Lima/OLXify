@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { typeAds } from "../../../pages/types/typeCategory";
 import { Item } from "./styled";
 type AdItemProps = {
-  data: typeAds;
+  data: typeAds | any;
 };
 export const AdItem = ({ data }: AdItemProps) => {
   let price = "";

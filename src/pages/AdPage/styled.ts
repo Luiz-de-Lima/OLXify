@@ -96,3 +96,24 @@ export const PageArea = styled.div`
     }
   }
 `;
+export const OtherArea = styled.div`
+  h2 {
+    font-size: 20px;
+  }
+
+  .list {
+    display: flex;
+    .adItem {
+      width: 25%;
+    }
+  }
+`;
+export const BreadCrumb = styled.div`
+font-size:13px ;
+margin-top:20px;
+a{
+  display:inline-block ;
+  text-decoration:underline ;
+  margin:0 5px;
+}
+`;
