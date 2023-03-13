@@ -13,12 +13,32 @@ export const Pages = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
+      <Route
+        path="/about"
+        element={
+          <RouteHandler>
+            <About />
+          </RouteHandler>
+        }
+      />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/ads/:id" element={<AdPage />} />
-      <Route path="/post-an-ad" element={<AddAds />} />
-
+      <Route
+        path="/ads/:id"
+        element={
+          <RouteHandler>
+            <AdPage />
+          </RouteHandler>
+        }
+      />
+      <Route
+        path="/post-an-ad"
+        element={
+          <RouteHandler>
+            <AddAds />
+          </RouteHandler>
+        }
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

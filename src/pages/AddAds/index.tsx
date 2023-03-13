@@ -15,7 +15,7 @@ export const AddAds = () => {
   const [price, setPrice] = useState("");
   const [priceNegotiable, setPriceNegotiable] = useState(false);
   const [description, setDescription] = useState("");
-  const fileField = useRef();
+  const fileField = useRef(null);
   const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ export const AddAds = () => {
                 id=""
                 disabled={disabled}
                 checked={priceNegotiable}
-                onChange={(e) => setPriceNegotiable(!priceNegotiable)}
+                onChange={() => setPriceNegotiable(!priceNegotiable)}
               />
             </div>
           </label>

@@ -78,12 +78,13 @@ export const Home = () => {
         <PageArea>
           <h2>Anúncios Recentes</h2>
           <div className="list-ads">
-            {adsList &&
-              adsList.map((item, index) => (
-                <>
-                  <AdItem key={index} data={item} />
-                </>
-              ))}
+            {adsList
+              ? adsList.map((item, index) => (
+                  <>
+                    <AdItem key={index} data={item} />
+                  </>
+                ))
+              : "serviço"}
           </div>
           <Link to={"/ads"} className="see-allLink">
             Ver Todos
