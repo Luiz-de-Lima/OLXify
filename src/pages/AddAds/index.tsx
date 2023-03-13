@@ -1,6 +1,7 @@
-import React, { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useApi } from "../../helpers/OlxifyApi";
-import { doLogin } from "../../helpers/AuthHandler";
+import MaskedInput from "react-text-mask";
+import createNumberMask from "text-mask-addons/dist/createNumberMask";
 import { useNavigate } from "react-router-dom";
 import { PageArea } from "./styled";
 import {
@@ -10,6 +11,7 @@ import {
 } from "../../components/MainComponents";
 
 export const AddAds = () => {
+  const [listcategories, setListCategories] = useState();
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
@@ -19,6 +21,16 @@ export const AddAds = () => {
   const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const cats = await useApi.getCategories();
+      setListCategories(cats);
+      console.log(listcategories);
+    };
+
+    getCategories();
+  }, []);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {};
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,6 +48,13 @@ export const AddAds = () => {
     // setInput({ email: "", password: "" });
   };
 
+  const priceMask = createNumberMask({
+    prefix: "R$ ",
+    includeThousandsSeparator: true,
+    thousandsSeparatorSymbol: ".",
+    allowDecimal: true,
+    decimalSymbol: ",",
+  });
   return (
     <PageContainer>
       <PageTitle>Postar um anuncio </PageTitle>
@@ -60,12 +79,34 @@ export const AddAds = () => {
           <label htmlFor="password" className="area">
             <div className="area--title">Categoria</div>
             <div className="area--input">
-              <select name="" id=""></select>
+              <select
+                name=""
+                id=""
+                disabled={disabled}
+                onChange={(e) => setCategory(e.target.value)}
+                required
+              >
+                <option value=""></option>
+                {listcategories &&
+                  listcategories.map((item) => (
+                    <option key={item_id} value={item._id}>
+                      {item.name}
+                    </option>
+                  ))}
+              </select>
             </div>
           </label>
           <label htmlFor="" className="area">
             <div className="area--title">Preço</div>
-            <div className="area--input">...</div>
+            <div className="area--input">
+              <MaskedInput
+                mask={priceMask}
+                placeholder="R$"
+                disabled={disabled || priceNegotiable}
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </div>
           </label>
           <label htmlFor="" className="area">
             <div className="area--title">Preço Negociável</div>
