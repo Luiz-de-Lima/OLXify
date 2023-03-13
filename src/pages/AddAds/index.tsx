@@ -36,16 +36,35 @@ export const AddAds = () => {
     e.preventDefault();
     setDisabled(true);
     setError("");
-    // const json = await useApi.login(input.email, input.password);
-    // if (json.error) {
-    //   setError(json.error);
-    // } else {
-    //   doLogin(json.token, rememberPassword);
+    let errors: Array<string> = [];
+    if (title.trim()) {
+      errors.push("sem titulo");
+    } else if (!category) {
+      errors.push("Sem categoria");
+    } else if (errors.length === 0) {
+      const fData = new FormData();
+      fData.append("title", title);
+      fData.append("price", price);
+      fData.append("priceneg", priceNegotiable);
+      fData.append("desc", description);
+      fData.append("cat", category);
 
-    //   navigate("/");
-    // }
-    // setDisabled(false);
-    // setInput({ email: "", password: "" });
+      if (fileField.current?.files.length > 0) {
+        for (let i = 0; i < fileField.current?.files.length; i++) {
+          fData.append("img", fileField.current?.files[i]);
+        }
+      }
+      const json = await useApi.AddAds(fData);
+      if (!json.error) {
+        navigate(`/ad/${json.id}`);
+        return;
+      } else {
+        setError(json.error);
+      }
+    } else {
+      setError(errors.join("\n"));
+    }
+    setDisabled(false);
   };
 
   const priceMask = createNumberMask({
