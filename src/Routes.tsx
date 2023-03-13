@@ -8,6 +8,7 @@ import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
 import { AdPage } from "./pages/AdPage";
 import { AddAds } from "./pages/AddAds";
+import { PageAds } from "./pages/PageAds";
 
 export const Pages = () => {
   return (
@@ -28,6 +29,15 @@ export const Pages = () => {
         element={
           <RouteHandler>
             <AdPage />
+          </RouteHandler>
+        }
+      />
+
+      <Route
+        path="/page-ads"
+        element={
+          <RouteHandler>
+            <PageAds />
           </RouteHandler>
         }
       />
