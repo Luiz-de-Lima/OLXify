@@ -8,6 +8,7 @@ import { typeCategorie, typeAds } from "../types/typeCategory";
 import { AdItem } from "../../components/partials/Aditem";
 
 export const PageAds = () => {
+  const navigate = useNavigate();
   const [stateList, setStateList] = useState<typeState[]>([]);
   const [categories, setCategories] = useState<typeCategorie[]>([]);
 
@@ -40,11 +41,33 @@ export const PageAds = () => {
     setAdsList(json.ads);
     console.log(adsList, "ads");
   };
+
+  const getAdsList = async () => {
+    const json = await useApi.getAds({
+      sort: "desc",
+      limit: 9,
+    });
+    setAdsList(json.ads);
+  };
   useEffect(() => {
     getStates();
     getCategories();
-    getRecentAds();
+    getAdsList;
   }, []);
+
+  useEffect(() => {
+    let queryString = [];
+    if (q) {
+      queryString.push(`q=${q}`);
+    } else if (cat) {
+      queryString.push(`cat=${cat}`);
+    } else if (stateSelect) {
+      queryString.push(`state=${stateSelect}`);
+    }
+    navigate({
+      search: `?${queryString.join("&")}`,
+    });
+  }, [q, cat, stateSelect]);
 
   return (
     <PageArea>
@@ -55,11 +78,17 @@ export const PageAds = () => {
             name="q"
             id=""
             placeholder="o que você procura?"
-            value={stateSelect}
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
           />
 
           <div className="filterName">Estado:</div>
-          <select name="state" id="">
+          <select
+            name="state"
+            id=""
+            value={stateSelect}
+            onChange={(e) => setStateSelect(e.target.value)}
+          >
             <option value=""></option>
             {stateList.map((item, index) => (
               <option key={index} value={item.name}>
@@ -71,7 +100,13 @@ export const PageAds = () => {
           <div className="filterName">Categoria:</div>
           <ul>
             {categories.map((item, index) => (
-              <li key={index} className={cat===item.slug?'category-item active':'category-item'}>
+              <li
+                key={index}
+                className={
+                  cat === item.slug ? "category-item active" : "category-item"
+                }
+                onClick={() => setCat(item.slug)}
+              >
                 {item.img}
                 <span>{item.name}</span>
               </li>
@@ -79,7 +114,14 @@ export const PageAds = () => {
           </ul>
         </form>
       </div>
-      <div className="right-side">...</div>
+      <div className="right-side">
+        <h2>Resultados</h2>
+        <div className="list">
+          {adsList.map((item, index) => (
+            <AdItem key={index} data={item} />
+          ))}
+        </div>
+      </div>
     </PageArea>
   );
 };

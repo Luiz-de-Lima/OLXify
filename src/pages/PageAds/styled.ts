@@ -52,5 +52,17 @@ export const PageArea = styled.div`
   }
   .right-side {
     flex: 1;
+
+    h2 {
+      margin-top: 0;
+    }
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+
+      .adItem{
+        width:33% ;
+      }
+    }
   }
 `;
