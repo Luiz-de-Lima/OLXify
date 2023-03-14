@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { typeState } from "../types/typesState";
 import { typeCategorie, typeAds } from "../types/typeCategory";
 import { AdItem } from "../../components/partials/Aditem";
+let timer: number | undefined;
 
 export const PageAds = () => {
   const navigate = useNavigate();
@@ -13,6 +14,8 @@ export const PageAds = () => {
   const [categories, setCategories] = useState<typeCategorie[]>([]);
 
   const [adsList, setAdsList] = useState<typeAds[]>([]);
+
+  const [resultOpacity, setResultOpacity] = useState(1);
   const useQueryString = () => {
     return new URLSearchParams(useLocation().search);
   };
@@ -33,26 +36,21 @@ export const PageAds = () => {
     const cates = await useApi.getCategories();
     setCategories(cates);
   };
-  const getRecentAds = async () => {
-    const json = await useApi.getAds({
-      sort: "desc",
-      limit: 8,
-    });
-    setAdsList(json.ads);
-    console.log(adsList, "ads");
-  };
 
   const getAdsList = async () => {
     const json = await useApi.getAds({
       sort: "desc",
       limit: 9,
+      q,
+      cat,
+      stateSelect,
     });
     setAdsList(json.ads);
+    setResultOpacity(1);
   };
   useEffect(() => {
     getStates();
     getCategories();
-    getAdsList;
   }, []);
 
   useEffect(() => {
@@ -67,6 +65,12 @@ export const PageAds = () => {
     navigate({
       search: `?${queryString.join("&")}`,
     });
+    if (timer) {
+      clearTimeout(timer);
+    }
+    timer = setTimeout(getAdsList, 2000);
+    getAdsList();
+    setResultOpacity(0.3);
   }, [q, cat, stateSelect]);
 
   return (
@@ -116,7 +120,7 @@ export const PageAds = () => {
       </div>
       <div className="right-side">
         <h2>Resultados</h2>
-        <div className="list">
+        <div className="list" style={{ opacity: `${resultOpacity}` }}>
           {adsList.map((item, index) => (
             <AdItem key={index} data={item} />
           ))}
