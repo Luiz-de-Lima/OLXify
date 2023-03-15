@@ -19,9 +19,9 @@ export const PageAds = () => {
   const useQueryString = () => {
     return new URLSearchParams(useLocation().search);
   };
-
+  const [adsTotal, setAdsTotal] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
   const query = useQueryString();
-
   const [q, setQ] = useState(query.get("q") != null ? query.get("q") : "");
   const [cat, setCat] = useState("");
   const [stateSelect, setStateSelect] = useState(
@@ -49,9 +49,18 @@ export const PageAds = () => {
       stateSelect,
     });
     setAdsList(json.ads);
+    setAdsTotal(json.total);
     setResultOpacity(1);
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (adsList.length > 0) {
+      setPageCount(Math.ceil(adsTotal / adsList.length));
+    } else {
+      setPageCount(0);
+    }
+  }, [adsTotal]);
   useEffect(() => {
     getStates();
     getCategories();
@@ -76,6 +85,11 @@ export const PageAds = () => {
     getAdsList();
     setResultOpacity(0.3);
   }, [q, cat, stateSelect]);
+
+  let pagination: Array<number> = [];
+  for (let i = 1; i <= pageCount; i++) {
+    pagination.push();
+  }
 
   return (
     <PageArea>
@@ -143,6 +157,14 @@ export const PageAds = () => {
         <div className="list" style={{ opacity: `${resultOpacity}` }}>
           {adsList.map((item, index) => (
             <AdItem key={index} data={item} />
+          ))}
+        </div>
+
+        <div className="pagination">
+          {pagination.map((item, index) => (
+            <div key={index} className="page-item">
+              {item}
+            </div>
           ))}
         </div>
       </div>

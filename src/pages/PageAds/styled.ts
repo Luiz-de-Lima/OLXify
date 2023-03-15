@@ -60,13 +60,29 @@ export const PageArea = styled.div`
       display: flex;
       flex-wrap: wrap;
 
-      .adItem{
-        width:33% ;
+      .adItem {
+        width: 33%;
       }
     }
-    .list-warning{
-      padding:30px ;
-      text-align:center ;
+    .list-warning {
+      padding: 30px;
+      text-align: center;
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0;
+      .page-item {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 5px;
+      }
     }
   }
 `;
