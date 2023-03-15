@@ -9,3 +9,7 @@ export const Footer = () => {
     </FooterArea>
   );
 };
+
+//request Get(/user/me(token))
+//PUT /user/me (token,name,email,state,password)
+//POST /ad/<id>(token,status,title,category,price,priceNegotiable,description,images,img[])

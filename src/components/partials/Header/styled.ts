@@ -81,4 +81,27 @@ export const HeaderArea = styled.header`
       }
     }
   }
+
+  @media (max-width: 600px) {
+    & {
+      height: auto;
+    }
+    .container {
+      flex-direction: column;
+      background-color: red;
+    }
+    .logo {
+      justify-content: center;
+      padding: 10px 0;
+    }
+    nav {
+      ul {
+        flex-direction: column;
+         
+        li {
+          margin: 20px;
+        }
+      }
+    }
+  }
 `;
