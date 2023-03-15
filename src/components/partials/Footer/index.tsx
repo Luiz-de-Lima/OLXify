@@ -1,5 +1,11 @@
 import React from "react";
 import { FooterArea } from "./styled";
 export const Footer = () => {
-  return <FooterArea>Footer</FooterArea>;
+  return (
+    <FooterArea>
+      <p>
+        Todos os direitos reservados <br /> <span>OlxFy</span>
+      </p>
+    </FooterArea>
+  );
 };
