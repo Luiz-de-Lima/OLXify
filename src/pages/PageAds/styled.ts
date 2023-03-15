@@ -82,6 +82,14 @@ export const PageArea = styled.div`
         align-items: center;
         justify-content: center;
         margin-right: 5px;
+        cursor: pointer;
+
+        &:hover {
+          border: 1px solid #999;
+        }
+        &:active {
+          background-color: #ccc;
+        }
       }
     }
   }

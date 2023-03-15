@@ -27,8 +27,8 @@ export const PageAds = () => {
   const [stateSelect, setStateSelect] = useState(
     query.get("cat") != null ? query.get("cat") : ""
   );
-
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const getStates = async () => {
     const sList = await useApi.getStates();
@@ -41,9 +41,11 @@ export const PageAds = () => {
 
   const getAdsList = async () => {
     setLoading(true);
+    let offSet = 0;
+    offSet = (currentPage - 1) * 2;
     const json = await useApi.getAds({
       sort: "desc",
-      limit: 9,
+      limit: 2,
       q,
       cat,
       stateSelect,
@@ -61,6 +63,10 @@ export const PageAds = () => {
       setPageCount(0);
     }
   }, [adsTotal]);
+  useEffect(() => {
+    setResultOpacity(0.3);
+    getAdsList();
+  }, [currentPage]);
   useEffect(() => {
     getStates();
     getCategories();
@@ -138,7 +144,7 @@ export const PageAds = () => {
       </div>
       <div className="right-side">
         <h2>Resultados</h2>
-        {loading && (
+        {loading && adsList.length === 0 && (
           <div className="list-warning">
             <img
               src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fgiphy.com%2Fexplore%2Floading&psig=AOvVaw3HQSILjyUwLZmDty0VDDEn&ust=1678990774875000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCKC-4ZjG3v0CFQAAAAAdAAAAABAD"
@@ -162,7 +168,13 @@ export const PageAds = () => {
 
         <div className="pagination">
           {pagination.map((item, index) => (
-            <div key={index} className="page-item">
+            <div
+              onClick={() => setCurrentPage(item)}
+              key={index}
+              className={
+                item === currentPage ? "page-item active" : "page-item"
+              }
+            >
               {item}
             </div>
           ))}
