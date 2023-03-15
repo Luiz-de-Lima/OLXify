@@ -64,5 +64,9 @@ export const PageArea = styled.div`
         width:33% ;
       }
     }
+    .list-warning{
+      padding:30px ;
+      text-align:center ;
+    }
   }
 `;

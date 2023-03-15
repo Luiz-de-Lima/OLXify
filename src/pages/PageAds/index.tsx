@@ -28,6 +28,8 @@ export const PageAds = () => {
     query.get("cat") != null ? query.get("cat") : ""
   );
 
+  const [loading, setLoading] = useState(false);
+
   const getStates = async () => {
     const sList = await useApi.getStates();
     setStateList(sList);
@@ -38,6 +40,7 @@ export const PageAds = () => {
   };
 
   const getAdsList = async () => {
+    setLoading(true);
     const json = await useApi.getAds({
       sort: "desc",
       limit: 9,
@@ -47,6 +50,7 @@ export const PageAds = () => {
     });
     setAdsList(json.ads);
     setResultOpacity(1);
+    setLoading(false);
   };
   useEffect(() => {
     getStates();
@@ -120,6 +124,22 @@ export const PageAds = () => {
       </div>
       <div className="right-side">
         <h2>Resultados</h2>
+        {loading && (
+          <div className="list-warning">
+            <img
+              src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fgiphy.com%2Fexplore%2Floading&psig=AOvVaw3HQSILjyUwLZmDty0VDDEn&ust=1678990774875000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCKC-4ZjG3v0CFQAAAAAdAAAAABAD"
+              alt="carregando"
+            />
+          </div>
+        )}
+        {!loading && adsList.length === 0 && (
+          <div className="list-warning">
+            <img
+              src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fgiphy.com%2Fexplore%2Floading&psig=AOvVaw3HQSILjyUwLZmDty0VDDEn&ust=1678990774875000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCKC-4ZjG3v0CFQAAAAAdAAAAABAD"
+              alt="carregando"
+            />
+          </div>
+        )}
         <div className="list" style={{ opacity: `${resultOpacity}` }}>
           {adsList.map((item, index) => (
             <AdItem key={index} data={item} />
