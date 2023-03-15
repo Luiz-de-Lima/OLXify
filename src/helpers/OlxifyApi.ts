@@ -96,9 +96,9 @@ export const useApi = {
   getAds: async (options: {
     sort: string;
     limit: number;
-    q: any;
-    cat: any;
-    stateSelect: any;
+    q?: any;
+    cat?: any;
+    stateSelect?: any;
   }) => {
     const json = await apiFetchGet("/ad/list", options);
     return json;
