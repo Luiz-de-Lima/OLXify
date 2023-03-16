@@ -88,7 +88,7 @@ export const HeaderArea = styled.header`
     }
     .container {
       flex-direction: column;
-      background-color: red;
+      padding:10px 0 ;
     }
     .logo {
       justify-content: center;
@@ -97,7 +97,7 @@ export const HeaderArea = styled.header`
     nav {
       ul {
         flex-direction: column;
-         
+
         li {
           margin: 20px;
         }

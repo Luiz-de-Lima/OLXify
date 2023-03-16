@@ -57,4 +57,53 @@ export const PageArea = styled.div`
       }
     }
   }
+
+  @media (max-width: 600px) {
+    & {
+      flex-direction: column;
+    }
+    .left-side {
+      width: auto;
+      margin: 10px;
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+          width: 50%;
+        }
+      }
+    }
+    .right-side {
+      margin: 10px;
+
+      .list {
+        .adItem {
+          width: 50%;
+        }
+      }
+    }
+  }
+  @media (max-width: 600px) {
+    form {
+      .area {
+        flex-direction: column;
+
+        .area--title {
+          width: 100%;
+          text-align: left;
+          margin-bottom: 10px;
+        }
+        .area--input {
+          width: 100%;
+
+          button {
+            width: 100%;
+            padding: 10px;
+          }
+        }
+      }
+    }
+  }
 `;

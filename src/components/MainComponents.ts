@@ -7,6 +7,12 @@ export const PageContainer = styled.div`
 `;
 export const PageTitle = styled.h1`
   font-size: 27px;
+
+  @media (max-width: 600px) {
+    font-size: 22px;
+    padding: 10px 0;
+    text-align: center;
+  }
 `;
 export const PageBody = styled.div``;
 
